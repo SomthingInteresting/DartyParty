@@ -49,3 +49,7 @@ To run the Cypress tests:
 npm run cypress:open
 ```
 
+TODO: Fix restart bug
+TODO: Add Party Mode games
+TODO: Add backend for keeping track of games, players, and leaderboards 
+TODO: Add leaderboard for current game
