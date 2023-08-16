@@ -4,15 +4,16 @@
   padding: 0;
 }
 
-html {
+html, body {
   height: 100%;
-}
-
-body {
-  min-height: 100vh; /* ensures the body covers the whole viewport height */
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+body {
+  overflow: hidden;
 }
 
 ul#board {
@@ -68,5 +69,19 @@ img {
   100% {
     left: 10%;
     top: 35px;
+  }
+}
+
+/* Media query for screens with max width of 768px (common breakpoint for tablets and smaller) */
+@media only screen and (max-width: 768px) {
+  ul#board {
+      margin: 0 auto; /* This can help center block-level elements */
+      position: static; /* This removes the 'relative' positioning which may affect centering */
+  }
+
+  /* Depending on your layout, you may also want to provide some top/bottom margin for spacing */
+  ul#board {
+      margin-top: 90px; /* Adjust as needed */
+      margin-bottom: 20px; /* Adjust as needed */
   }
 }
