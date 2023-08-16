@@ -4,13 +4,14 @@ import './Dartboard.css';
 function Dartboard() {
 
   useEffect(() => {
-    var wide = 400;
+    var wide = 300;  // Adjust this value
+    var reductionInterval = 60;  // Add this value for proportional reduction
     for (var i = 0; i <= 4; i++) {
       var item = document.createElement('li');
       document.getElementById('board').appendChild(item);
       document.querySelectorAll('ul#board li')[i].style.width = `${wide}px`;
       document.querySelectorAll('ul#board li')[i].style.height = `${wide}px`;
-      wide -= 80;
+      wide -= reductionInterval;  // Use the new interval here
     }
 
     document.querySelectorAll('ul#board li:nth-child(odd)').forEach(li => li.classList.add('red'));

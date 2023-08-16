@@ -15,8 +15,8 @@ html, body {
 
 ul#board {
   position: relative;
-  height: 400px;
-  width: 400px;
+  height: 300px;
+  width: 300px;
   border-radius: 50%;
   box-shadow: 0 10px 50px rgba(0,0,0,0.6);
 }
@@ -40,7 +40,7 @@ ul#board li.blank {
 
 img {
   z-index: 200;
-  height: 80px;
+  height: 60px;
   transform: translate(-50%, -50%) rotate(-45deg);
   position: absolute;
   display: none;
@@ -65,6 +65,6 @@ img {
   }
   100% {
     left: 10%;
-    top: 40px;
+    top: 35px;
   }
 }
