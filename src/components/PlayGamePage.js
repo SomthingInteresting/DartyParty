@@ -27,6 +27,7 @@ function PlayGamePage() {
 
   const submitScore = () => {
     const dartScores = Object.values(darts).map(Number);
+    let tripleMessageDisplayed = false;
 
     // 1. Check if any dart score exceeds 60
     if (dartScores.some(score => score > 60 || score < 0)) {
@@ -38,6 +39,14 @@ function PlayGamePage() {
     if (dartScores.some(isNaN)) {
         alert('Please enter valid numbers for dart scores.');
         return;
+    }
+
+    for (let score of dartScores) {
+        if ([3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60].includes(score) && !tripleMessageDisplayed) {
+            alert('Oooh baby a triple!');
+            tripleMessageDisplayed = true;
+            break; // Once the message is displayed, we exit the loop
+        }
     }
 
     const totalScore = dartScores.reduce((acc, score) => acc + score, 0);
