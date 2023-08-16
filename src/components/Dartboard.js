@@ -14,6 +14,8 @@ function Dartboard() {
       wide -= reductionInterval;  // Use the new interval here
     }
 
+    // console.log(document.querySelectorAll('ul#board li').length);
+
     document.querySelectorAll('ul#board li:nth-child(odd)').forEach(li => li.classList.add('red'));
     document.querySelectorAll('ul#board li:nth-child(even)').forEach(li => li.classList.add('blank'));
 
