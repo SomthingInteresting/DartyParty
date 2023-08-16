@@ -5,50 +5,44 @@ function PlayGamePage() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  console.log("Full location object:", location);
-  
   // Memoize the initialPlayers so it's not re-computed on every render
   const initialPlayers = useMemo(() => {
     return location.state?.players || [];
   }, [location.state]);
-
-  console.log("Received players:", initialPlayers);
 
   const [players, setPlayers] = useState(initialPlayers);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [darts, setDarts] = useState({ dart1: '', dart2: '', dart3: '' });
 
   const handleDartChange = (event) => {
-    setDarts({
-      ...darts,
-      [event.target.name]: event.target.value,
-    });
+    const { name, value } = event.target;
+    setDarts(prevDarts => ({ ...prevDarts, [name]: value }));
   };
 
-  const submitScore = () => {
-    const dartScores = Object.values(darts).map(Number);
-    let tripleMessageDisplayed = false;
-
+  const isValidScore = (dartScores) => {
     // 1. Check if any dart score exceeds 60
     if (dartScores.some(score => score > 60 || score < 0)) {
         alert('Invalid score! A single dart score cannot exceed 60 or be negative.');
-        return;
+        return false;
     }
 
     // 2. Check if scores are valid numbers
     if (dartScores.some(isNaN)) {
         alert('Please enter valid numbers for dart scores.');
-        return;
+        return false;
     }
 
-    for (let score of dartScores) {
-        if ([3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60].includes(score) && !tripleMessageDisplayed) {
-            alert('Oooh baby a triple!');
-            tripleMessageDisplayed = true;
-            break; // Once the message is displayed, we exit the loop
-        }
-    }
+    return true;
+  };
 
+  const displayTripleMessage = (dartScores) => {
+    const tripleScores = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60];
+    if (dartScores.some(score => tripleScores.includes(score))) {
+        alert('Oooh baby a triple!');
+    }
+  };
+
+  const updatePlayerScore = (dartScores) => {
     const totalScore = dartScores.reduce((acc, score) => acc + score, 0);
     const updatedPlayers = [...players];
     const currentPlayerScore = updatedPlayers[currentPlayerIndex].score;
@@ -59,7 +53,6 @@ function PlayGamePage() {
         alert('Score below zero! Turn voided.');
         return;
     } else if (newScore === 0) {
-        // 3. Check winning condition, the last dart must be a double
         const lastDart = dartScores[dartScores.length - 1];
         if (lastDart < 2 || (lastDart % 2 !== 0)) {
             alert('To win, the last dart must be a double!');
@@ -72,57 +65,51 @@ function PlayGamePage() {
     }
     
     updatedPlayers[currentPlayerIndex].score = newScore;
-
+    setPlayers(updatedPlayers);
     setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
     setDarts({ dart1: '', dart2: '', dart3: '' });
-    setPlayers(updatedPlayers);
-};
+  };
+
+  const submitScore = () => {
+    const dartScores = Object.values(darts).map(Number);
+    if (isValidScore(dartScores)) {
+      displayTripleMessage(dartScores);
+      updatePlayerScore(dartScores);
+    }
+  };
 
   useEffect(() => {
-    // Reset the game state if no players are provided
-    if (!initialPlayers.length) {
-      navigate('/');
-    }
+    if (!initialPlayers.length) navigate('/');
   }, [initialPlayers, navigate]);
 
   return (
     <div className="container mt-5">
-      <h2>{players[currentPlayerIndex]?.name}</h2> 
+      <h2>{players[currentPlayerIndex]?.name}</h2>
       <p>Current Score: {players[currentPlayerIndex]?.score}</p>
-      <div className="row mt-3">
-        <div className="col-md-4">
-          <input 
-            className="form-control" 
-            name="dart1" 
-            value={darts.dart1} 
-            onChange={handleDartChange} 
-            placeholder="Dart 1" 
-          />
-        </div>
-        <div className="col-md-4">
-          <input 
-            className="form-control" 
-            name="dart2" 
-            value={darts.dart2} 
-            onChange={handleDartChange} 
-            placeholder="Dart 2" 
-          />
-        </div>
-        <div className="col-md-4">
-          <input 
-            className="form-control" 
-            name="dart3" 
-            value={darts.dart3} 
-            onChange={handleDartChange} 
-            placeholder="Dart 3" 
-          />
-        </div>
+      <DartInputs darts={darts} onChange={handleDartChange} />
+      <div className="mt-3">
+        <button className="btn btn-primary" onClick={submitScore}>Submit Score</button>
+        <button className="btn btn-secondary ms-2" onClick={() => navigate('/')}>Go to Homepage</button>
+        <button className="btn btn-danger ms-2" onClick={() => setCurrentPlayerIndex(0)}>Restart Game</button>
       </div>
-      <button className="btn btn-primary mt-3" onClick={submitScore}>Submit Score</button>
-      <button className="btn btn-secondary mt-3 ms-2" onClick={() => navigate('/')}>Go to Homepage</button>
-      <button className="btn btn-danger mt-3 ms-2" onClick={() => setCurrentPlayerIndex(0)}>Restart Game</button>
     </div>
   );
 }
+
+const DartInputs = ({ darts, onChange }) => (
+  <div className="row mt-3">
+    {["dart1", "dart2", "dart3"].map(dart => (
+      <div className="col-md-4" key={dart}>
+        <input
+          className="form-control"
+          name={dart}
+          value={darts[dart]}
+          onChange={onChange}
+          placeholder={`Dart ${dart.charAt(4)}`}
+        />
+      </div>
+    ))}
+  </div>
+);
 
 export default PlayGamePage;
