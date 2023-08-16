@@ -1,7 +1,7 @@
 // External library imports
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './bootstrap.min.css';
 
 // Component imports
 import HomePage from './components/Homepage';

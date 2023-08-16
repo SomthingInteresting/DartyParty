@@ -41,6 +41,7 @@ function ChooseGamePage() {
       >
         Start Game
       </button>
+      <button className="btn btn-secondary mt-3" onClick={() => navigate('/')}>Go to Homepage</button>
     </div>
   );
 }
