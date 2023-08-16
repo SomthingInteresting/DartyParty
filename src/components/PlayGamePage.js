@@ -27,28 +27,47 @@ function PlayGamePage() {
 
   const submitScore = () => {
     const dartScores = Object.values(darts).map(Number);
+
+    // 1. Check if any dart score exceeds 60
+    if (dartScores.some(score => score > 60 || score < 0)) {
+        alert('Invalid score! A single dart score cannot exceed 60 or be negative.');
+        return;
+    }
+
+    // 2. Check if scores are valid numbers
+    if (dartScores.some(isNaN)) {
+        alert('Please enter valid numbers for dart scores.');
+        return;
+    }
+
     const totalScore = dartScores.reduce((acc, score) => acc + score, 0);
     const updatedPlayers = [...players];
     const currentPlayerScore = updatedPlayers[currentPlayerIndex].score;
     
     const newScore = currentPlayerScore - totalScore;
-  
+
     if (newScore < 0) {
-      alert('Score below zero! Turn voided.');
-    } else {
-      updatedPlayers[currentPlayerIndex].score = newScore;
+        alert('Score below zero! Turn voided.');
+        return;
+    } else if (newScore === 0) {
+        // 3. Check winning condition, the last dart must be a double
+        const lastDart = dartScores[dartScores.length - 1];
+        if (lastDart < 2 || (lastDart % 2 !== 0)) {
+            alert('To win, the last dart must be a double!');
+            return;
+        } else {
+            alert(`${updatedPlayers[currentPlayerIndex].name} wins!`);
+            navigate('/');
+            return;
+        }
     }
-  
-    if (newScore === 0) {
-      alert(`${updatedPlayers[currentPlayerIndex].name} wins!`);
-      navigate('/');
-      return;
-    }
-  
+    
+    updatedPlayers[currentPlayerIndex].score = newScore;
+
     setCurrentPlayerIndex((currentPlayerIndex + 1) % players.length);
     setDarts({ dart1: '', dart2: '', dart3: '' });
     setPlayers(updatedPlayers);
-  };  
+};
 
   useEffect(() => {
     // Reset the game state if no players are provided
