@@ -11,18 +11,11 @@
   font-weight: bold;
   font-size: 3rem;
   color: #CB1B45;
-  text-shadow: 
-    3px 3px 0px #fff, 
-    -3px -3px 0px #fff, 
-    3px -3px 0px #fff, 
-    -3px 3px 0px #fff,
-    0px 3px 0px #fff, 
-    3px 0px 0px #fff, 
-    0px -3px 0px #fff, 
-    -3px 0px 0px #fff; /* Additional shadows to fill in the gaps */
+  filter: url(#roundedOutline);
   animation: growShrink 1.5s infinite alternate;
   perspective: 500px;
 }
+
 
 
 @keyframes growShrink {

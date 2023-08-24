@@ -15,7 +15,20 @@ function HomePage() {
         
         {/* Description and Buttons Column */}
         <div className="col-md-6 text-center">
-        <h2 className="logo">Darty Party!</h2>
+          <svg style={{ height: 0, width: 0, position: 'absolute' }}>
+            <filter id="roundedOutline">
+                <feMorphology in="SourceAlpha" result="expanded" operator="dilate" radius="1"/>
+                <feGaussianBlur in="expanded" result="blurred" stdDeviation="0.5"/>
+                <feFlood floodColor="#fff" result="color"/>
+                <feComposite in="color" in2="blurred" operator="in" result="softOutline"/>
+                <feComposite in="softOutline" in2="SourceAlpha" operator="out" result="softOutline"/>
+                <feMerge>
+                    <feMergeNode in="softOutline"/>
+                    <feMergeNode in="SourceGraphic"/>
+                </feMerge>
+            </filter>
+          </svg>
+          <h2 className="logo">Darty Party!</h2>
           <p>Choose your game mode:</p>
           <Link to="/choose">
             <button className="btn btn-primary btn-lg mt-3">Classic Mode</button>
