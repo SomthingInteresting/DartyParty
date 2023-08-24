@@ -35,13 +35,6 @@ function PlayGamePage() {
     return true;
   };
 
-  const displayTripleMessage = (dartScores) => {
-    const tripleScores = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36, 39, 42, 45, 48, 51, 54, 57, 60];
-    if (dartScores.some(score => tripleScores.includes(score))) {
-        alert('Oooh baby a triple!');
-    }
-  };
-
   const updatePlayerScore = (dartScores) => {
     const totalScore = dartScores.reduce((acc, score) => acc + score, 0);
     const updatedPlayers = [...players];
@@ -73,7 +66,6 @@ function PlayGamePage() {
   const submitScore = () => {
     const dartScores = Object.values(darts).map(Number);
     if (isValidScore(dartScores)) {
-      displayTripleMessage(dartScores);
       updatePlayerScore(dartScores);
     }
   };
