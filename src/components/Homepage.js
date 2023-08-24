@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Dartboard from './Dartboard';  // Import the Dartboard component
+import Dartboard from './Dartboard';
 
 function HomePage() {
   return (
@@ -19,9 +19,9 @@ function HomePage() {
           <Link to="/choose">
             <button className="btn btn-primary btn-lg mt-3">Classic Mode</button>
           </Link>
-          <button className="btn btn-secondary btn-lg mt-3 ml-3" disabled>
-            Party Modes {/* Disabled until the logic for this mode is implemented */}
-          </button>
+          <Link to="/party-modes">
+            <button className="btn btn-secondary btn-lg mt-3 ml-3">Party Modes</button>
+          </Link>
         </div>
       </div>
     </div>

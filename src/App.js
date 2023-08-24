@@ -7,6 +7,8 @@ import './bootstrap.min.css';
 import HomePage from './components/Homepage';
 import ChooseGamePage from './components/ChooseGamePage';
 import PlayGamePage from './components/PlayGamePage';
+import PartyModesPage from './components/PartyModesPage';
+import KillerModePage from './components/KillerModePage';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/choose" element={<ChooseGamePage />} />
           <Route path="/play" element={<PlayGamePage />} />
+          <Route path="/party-modes" element={<PartyModesPage />} />
+          <Route path="/play/killer" element={<KillerModePage />} />
         </Routes>
       </div>
     </Router>
