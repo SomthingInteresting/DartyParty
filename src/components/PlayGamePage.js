@@ -13,6 +13,7 @@ function PlayGamePage() {
   const [players, setPlayers] = useState(initialPlayers);
   const [currentPlayerIndex, setCurrentPlayerIndex] = useState(0);
   const [darts, setDarts] = useState({ dart1: '', dart2: '', dart3: '' });
+  const [gameMessage, setGameMessage] = useState('');  // New state variable for the game message
 
   const handleDartChange = (event) => {
     const { name, value } = event.target;
@@ -20,18 +21,14 @@ function PlayGamePage() {
   };
 
   const isValidScore = (dartScores) => {
-    // 1. Check if any dart score exceeds 60
     if (dartScores.some(score => score > 60 || score < 0)) {
-        alert('Invalid score! A single dart score cannot exceed 60 or be negative.');
+        setGameMessage('Invalid score! A single dart score cannot exceed 60 or be negative.');
         return false;
     }
-
-    // 2. Check if scores are valid numbers
     if (dartScores.some(isNaN)) {
-        alert('Please enter valid numbers for dart scores.');
+        setGameMessage('Please enter valid numbers for dart scores.');
         return false;
     }
-
     return true;
   };
 
@@ -43,15 +40,15 @@ function PlayGamePage() {
     const newScore = currentPlayerScore - totalScore;
 
     if (newScore < 0) {
-        alert('Score below zero! Turn voided.');
+        setGameMessage('Score below zero! Turn voided.');
         return;
     } else if (newScore === 0) {
         const lastDart = dartScores[dartScores.length - 1];
         if (lastDart < 2 || (lastDart % 2 !== 0)) {
-            alert('To win, the last dart must be a double!');
+            setGameMessage('To win, the last dart must be a double!');
             return;
         } else {
-            alert(`${updatedPlayers[currentPlayerIndex].name} wins!`);
+            setGameMessage(`${updatedPlayers[currentPlayerIndex].name} wins!`);
             navigate('/');
             return;
         }
@@ -76,6 +73,7 @@ function PlayGamePage() {
 
   return (
     <div className="container mt-5">
+      {gameMessage && <div className="alert alert-info">{gameMessage}</div>}  {/* Display the game message */}
       <h2>{players[currentPlayerIndex]?.name}</h2>
       <p>Current Score: {players[currentPlayerIndex]?.score}</p>
       <DartInputs darts={darts} onChange={handleDartChange} />
