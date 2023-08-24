@@ -1,0 +1,35 @@
+.homePageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f4;
+}
+
+.logo {
+  font-family: 'Calibri', sans-serif;
+  font-weight: bold;
+  font-size: 3rem;
+  color: #CB1B45;
+  text-shadow: 
+    3px 3px 0px #fff, 
+    -3px -3px 0px #fff, 
+    3px -3px 0px #fff, 
+    -3px 3px 0px #fff,
+    0px 3px 0px #fff, 
+    3px 0px 0px #fff, 
+    0px -3px 0px #fff, 
+    -3px 0px 0px #fff; /* Additional shadows to fill in the gaps */
+  animation: growShrink 1.5s infinite alternate;
+  perspective: 500px;
+}
+
+
+@keyframes growShrink {
+  0% {
+      transform: scale(1) rotateX(0deg);
+  }
+  100% {
+      transform: scale(1.2) rotateX(20deg);
+  }
+}

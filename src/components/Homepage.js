@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Dartboard from './Dartboard';
+import './DartyPartyLogo.css';
 
 function HomePage() {
   return (
@@ -14,7 +15,7 @@ function HomePage() {
         
         {/* Description and Buttons Column */}
         <div className="col-md-6 text-center">
-          <h2>Darty Party!</h2>
+        <h2 className="logo">Darty Party!</h2>
           <p>Choose your game mode:</p>
           <Link to="/choose">
             <button className="btn btn-primary btn-lg mt-3">Classic Mode</button>
