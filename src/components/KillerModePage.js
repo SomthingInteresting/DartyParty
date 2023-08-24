@@ -54,7 +54,7 @@ function KillerModePage() {
 
   return (
     <div className="container mt-5">
-      <h2>Killer Mode</h2>
+      <h2>KILLER</h2>
       {gameMessage && <div className={`alert ${gameMessage.includes('win') ? 'alert-success' : 'alert-warning'}`}>{gameMessage}</div>}
 
       {!gameStarted ? (

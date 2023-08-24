@@ -8,13 +8,14 @@ function Dartboard() {
     var reductionInterval = 60;  // Add this value for proportional reduction
     for (var i = 0; i <= 4; i++) {
       var item = document.createElement('li');
-      document.getElementById('board').appendChild(item);
+      const boardElement = document.getElementById('board');
+      if (boardElement) {
+        boardElement.appendChild(item);
+      }
       document.querySelectorAll('ul#board li')[i].style.width = `${wide}px`;
       document.querySelectorAll('ul#board li')[i].style.height = `${wide}px`;
       wide -= reductionInterval;  // Use the new interval here
     }
-
-    // console.log(document.querySelectorAll('ul#board li').length);
 
     document.querySelectorAll('ul#board li:nth-child(odd)').forEach(li => li.classList.add('red'));
     document.querySelectorAll('ul#board li:nth-child(even)').forEach(li => li.classList.add('blank'));
@@ -27,17 +28,18 @@ function Dartboard() {
     });
 
     var time = 0;
+    var timer1, timer2;  // Declare variables to store the timeout IDs
+
     function afterShot() {
-      setTimeout(function () {
+      timer1 = setTimeout(function () {
         document.querySelector("#board li:nth-child(3) img").style.display = "block";
       }, 1000);
-      setTimeout(function () {
+      timer2 = setTimeout(function () {
         document.querySelector("#board li:nth-child(5) img").style.display = "block";
       }, 2000);
     }
 
     function shoot() {
-      console.log(`Time: ${time} seconds`);
       time += 1;
       if (time >= 2) {
         document.querySelector("#board li:nth-child(1) img").style.display = "block";
@@ -50,6 +52,13 @@ function Dartboard() {
 
     var timer = setInterval(shoot, 1000);
     shoot();
+
+    // Cleanup function
+    return () => {
+      clearInterval(timer);  // Clear the interval
+      clearTimeout(timer1);  // Clear the first timeout
+      clearTimeout(timer2);  // Clear the second timeout
+    };
 
   }, []);
 
