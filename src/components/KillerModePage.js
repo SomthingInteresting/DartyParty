@@ -55,43 +55,44 @@ function KillerModePage() {
   return (
     <div className="container mt-5">
       <h2>Killer Mode</h2>
-      {gameMessage && <div className="alert alert-warning">{gameMessage}</div>}
+      {gameMessage && <div className={`alert ${gameMessage.includes('win') ? 'alert-success' : 'alert-warning'}`}>{gameMessage}</div>}
 
       {!gameStarted ? (
         <div>
           {players.map((player, index) => (
-            <div key={index}>
+            <div key={index} className="mb-3">
               <input 
                 type="text" 
+                className="form-control"
                 placeholder={`Player ${index + 1} Name`} 
                 value={player.name}
                 onChange={(e) => handleNameChange(index, e)}
               />
             </div>
           ))}
-          <button onClick={addNewPlayer}>Add another player</button>
-          <button onClick={startGame}>Start Game</button>
+          <button className="btn btn-primary me-2" onClick={addNewPlayer}>Add another player</button>
+          <button className="btn btn-success" onClick={startGame}>Start Game</button>
         </div>
       ) : (
         <div className="players-list">
           {players.map((player, index) => (
-            <div key={index}>
+            <div key={index} className="mb-4">
               <h3>{player.name}</h3>
               <p>Number: {player.number}</p>
               <p>Lives: {player.lives}</p>
               <p>{player.isKiller ? 'Is a Killer!' : 'Not a Killer'}</p>
               
-              <button onClick={() => handleNumberSelection(index, Math.floor(Math.random() * 20) + 1)}>
+              <button className="btn btn-info me-2" onClick={() => handleNumberSelection(index, Math.floor(Math.random() * 20) + 1)}>
                 Choose Random Number
               </button>
 
-              <button onClick={() => handleBecomeKiller(index)}>
+              <button className="btn btn-warning me-2" onClick={() => handleBecomeKiller(index)}>
                 Become a Killer
               </button>
 
               {players.map((opponent, oppIndex) => (
                 oppIndex !== index && player.isKiller ? (
-                  <button key={oppIndex} onClick={() => handleKillOpponent(index, oppIndex)}>
+                  <button key={oppIndex} className="btn btn-danger me-2" onClick={() => handleKillOpponent(index, oppIndex)}>
                     Kill {opponent.name}
                   </button>
                 ) : null
