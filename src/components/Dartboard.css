@@ -81,7 +81,7 @@ img {
 
   /* Depending on your layout, you may also want to provide some top/bottom margin for spacing */
   ul#board {
-      margin-top: 90px; /* Adjust as needed */
+      margin-top: 75px; /* Adjust as needed */
       margin-bottom: 20px; /* Adjust as needed */
   }
 }
