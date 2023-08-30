@@ -2,7 +2,7 @@
 
 Welcome to the Darty Party Scoreboard - your web-based scoreboard for various dart games!
 
-![Darty Party Logo](path-to-your-logo-if-you-have-one.png)
+![Darty Party Logo](public/DartyParty.png)
 
 ## Overview
 
