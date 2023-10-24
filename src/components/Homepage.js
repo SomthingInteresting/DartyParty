@@ -28,7 +28,7 @@ function HomePage() {
                 </feMerge>
             </filter>
           </svg>
-          <h2 className="logo">DartyParty!</h2>
+          <h2 className="logo">Darty Party!</h2>
           <Link to="/choose">
             <button className="btn btn-primary btn-lg mt-3">Classic Mode</button>
           </Link>
